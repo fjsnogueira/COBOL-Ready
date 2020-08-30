@@ -58,6 +58,7 @@
         "onCommand:cobolplugin.move2pd",
         "onCommand:cobolplugin.move2ws",
         "onCommand:cobolplugin.move2dd",
+        "onCommand:cobolplugin.sampleCode",
         "onCommand:cobolplugin.move2anyforward",
         "onCommand:cobolplugin.move2anybackwards",
         "onCommand:cobolplugin.tab",
@@ -873,6 +874,10 @@
                 "title": "COBOL: Remove COBOL Identification Area"
             },
             {
+                "command": "cobolplugin.sampleCode",
+                "title": "COBOL: Sample COBOL Code"
+            },
+            {
                 "command": "cobolplugin.removeColumnNumbers",
                 "title": "COBOL: Remove Column Numbers"
             },
@@ -933,7 +938,7 @@
                 "title": "COBOL: Migrate copybook settings to workspace (for performance)"
             },
             {
-                "command" : "cobolplugin.showDocumentation",
+                "command": "cobolplugin.showDocumentation",
                 "title": "Show documentation"
             }
         ],

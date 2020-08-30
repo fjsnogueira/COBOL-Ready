@@ -415,6 +415,157 @@ export function activate(context: ExtensionContext):void {
         languages.setTextDocumentLanguage(act.document, "ACUCOBOL");
     });
 
+
+    // These code samples are for Demo Purposes ONLY.
+    // The source is here: http://www.csis.ul.ie/cobol/examples/default.htm
+
+// The sample code
+    const sampleCode = commands.registerCommand('cobolplugin.sampleCode', function () {
+        var Accept = "";
+        Accept += '       *The program accepts a simple student record from the user and displays the individual fields.\
+\n       * Also shows how the ACCEPT may be used to get and DISPLAY the system time and date.\
+\n       IDENTIFICATION DIVISION.\
+\n       PROGRAM-ID.  AcceptAndDisplay.\
+\n       AUTHOR.  Michael Coughlan.\
+\n       * Uses the ACCEPT and DISPLAY verbs to accept a student record\
+\n       * from the user and display some of the fields.  Also shows how\
+\n       * the ACCEPT may be used to get the system date and time.\
+\n       \
+\n       * The YYYYMMDD in "ACCEPT  CurrentDate FROM DATE YYYYMMDD."\
+\n       * is a format command that ensures that the date contains a \
+\n       * 4 digit year.  If not used, the year supplied by the system will\
+\n       * only contain two digits which may cause a problem in the year 2000.\
+\n       \
+\n       DATA DIVISION.\
+\n       WORKING-STORAGE SECTION.\
+\n       01 StudentDetails.\
+\n          02  StudentId       PIC 9(7).\
+\n          02  StudentName.\
+\n              03 Surname      PIC X(8).\
+\n              03 Initials     PIC XX.\
+\n          02  CourseCode      PIC X(4).\
+\n          02  Gender          PIC X.\
+\n       \
+\n       * YYMMDD\
+\n       01 CurrentDate.\
+\n          02  CurrentYear     PIC 9(4).\
+\n          02  CurrentMonth    PIC 99.\
+\n          02  CurrentDay      PIC 99.\
+\n       \
+\n       * YYDDD\
+\n       01 DayOfYear.\
+\n          02  FILLER          PIC 9(4).\
+\n          02  YearDay         PIC 9(3).\
+\n       \
+\n       \
+\n       * HHMMSSss   s = S/100\
+\n       01 CurrentTime.\
+\n          02  CurrentHour     PIC 99.\
+\n          02  CurrentMinute   PIC 99.\
+\n          02  FILLER          PIC 9(4).\
+\n       \
+\n       \
+\n       PROCEDURE DIVISION.\
+\n       Begin.\
+\n           DISPLAY "Enter student details using template below".\
+\n           DISPLAY "Enter - ID,Surname,Initials,CourseCode,Gender"\
+\n           DISPLAY "SSSSSSSNNNNNNNNIICCCCG".\
+\n           ACCEPT  StudentDetails.\
+\n           ACCEPT  CurrentDate FROM DATE YYYYMMDD.\
+\n           ACCEPT  DayOfYear FROM DAY YYYYDDD.\
+\n           ACCEPT  CurrentTime FROM TIME.\
+\n           DISPLAY "Name is ", Initials SPACE Surname.\
+\n           DISPLAY "Date is " CurrentDay SPACE CurrentMonth SPACE\
+\n           CurrentYear.\
+\n           DISPLAY "Today is day " YearDay " of the year".\
+\n           DISPLAY "The time is " CurrentHour ":" CurrentMinute.\
+\n           STOP RUN.';
+
+// Writing the file to workspace folder
+        fs.writeFile(path.join(getCombinedCopyBookSearchPath().toString(),"Beginners_Accept.cobol"), Accept , err => {
+            if (err){
+                return console.error(err);
+                vscode.window.showErrorMessage("Error Happened");
+            }
+            vscode.window.showInformationMessage("Beginners_Accept.cobol was added to the files successfully!");
+        })
+        
+// The sample code
+        var Multiplier = "";
+        Multiplier += '       *Accepts two single digit numbers from the user, multiplies them together and displays the result.\
+\n       IDENTIFICATION DIVISION.\
+\n       PROGRAM-ID.  Multiplier.\
+\n       AUTHOR.  Michael Coughlan.\
+\n       * Example program using ACCEPT, DISPLAY and MULTIPLY to get two single digit numbers from the user and multiply them together\
+\n\n       DATA DIVISION.\
+\n       \
+\n       WORKING-STORAGE SECTION.\
+\n       01  Num1                                PIC 9  VALUE ZEROS.\
+\n       01  Num2                                PIC 9  VALUE ZEROS.\
+\n       01  Result                              PIC 99 VALUE ZEROS.\
+\n       \
+\n       PROCEDURE DIVISION.\
+\n           DISPLAY "Enter first number  (1 digit) : " WITH NO ADVANCING.\
+\n           ACCEPT Num1.\
+\n           DISPLAY "Enter second number (1 digit) : " WITH NO ADVANCING.\
+\n           ACCEPT Num2.\
+\n           MULTIPLY Num1 BY Num2 GIVING Result.\
+\n           DISPLAY "Result is = ", Result.\
+\n           STOP RUN.';
+     
+// Writing the file to workspace folder
+        fs.writeFile(path.join("c:/Users/Home/Documents/tese","Beginners_Multiplier.cobol"), Multiplier , err => {
+            if (err){
+                return console.error(err);
+                    vscode.window.showErrorMessage("Error Happened");
+            }
+            vscode.window.showInformationMessage("Beginners_Multiplier.cobol was added to the files successfully!");
+        })
+// The Sample Code
+        var IterIf = "";
+        IterIf += '       * An example program that implements a primative calculator.\
+\n       * The calculator only does additions and multiplications.\
+\n       IDENTIFICATION DIVISION.\
+\n       PROGRAM-ID.  Iteration-If.\
+\n       AUTHOR.  Michael Coughlan.\
+\n       \
+\n       DATA DIVISION.\
+\n       WORKING-STORAGE SECTION.\
+\n       01  Num1           PIC 9  VALUE ZEROS.\
+\n       01  Num2           PIC 9  VALUE ZEROS.\
+\n       01  Result         PIC 99 VALUE ZEROS.\
+\n       01  Operator       PIC X  VALUE SPACE.\
+\n       \
+\n       PROCEDURE DIVISION.\
+\n       Calculator.\
+\n           PERFORM 3 TIMES\
+\n              DISPLAY "Enter First Number      : " WITH NO ADVANCING\
+\n              ACCEPT Num1\
+\n              DISPLAY "Enter Second Number     : " WITH NO ADVANCING\
+\n              ACCEPT Num2\
+\n              DISPLAY "Enter operator (+ or *) : " WITH NO ADVANCING\
+\n              ACCEPT Operator\
+\n              IF Operator = "+" THEN\
+\n                 ADD Num1, Num2 GIVING Result\
+\n              END-IF\
+\n              IF Operator = "*" THEN\
+\n                 MULTIPLY Num1 BY Num2 GIVING Result\
+\n              END-IF\
+\n              DISPLAY "Result is = ", Result\
+\n           END-PERFORM.\
+\n           STOP RUN.';
+// Writing the file to workspace folder
+        fs.writeFile(path.join(getCombinedCopyBookSearchPath().toString(),"Selection-Iter_IterIf.cobol"), IterIf, err => {
+            if (err){
+                return console.error(err);
+                    vscode.window.showErrorMessage("Error Happened");
+            }
+            vscode.window.showInformationMessage("Selection-Iter_IterIf.cobol was added to the files successfully!");
+        })
+    });
+
+
+
     const changeLanguageToCOBOL = commands.registerCommand('cobolplugin.change_lang_to_cobol', function () {
         const act = window.activeTextEditor;
         if (act === null || act === undefined) {
